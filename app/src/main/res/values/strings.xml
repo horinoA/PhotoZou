@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">PhotoZou</string>
+    <string name="action_serch">検索したい単語</string>
+    <string name="action_settings">メニュー</string>
+</resources>
