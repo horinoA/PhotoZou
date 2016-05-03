@@ -33,7 +33,6 @@ class CustomAdapter(cardview : Array<card_View>) : RecyclerView.Adapter<CustomAd
 
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        Log.d("test",mCardView[position].card_title)
         //setter,getterは書かなくてもインスタンスについてくる
         holder.itemView.card_title.text = mCardView[position].card_title
         holder.itemView.caption1.text = mCardView[position].caption1

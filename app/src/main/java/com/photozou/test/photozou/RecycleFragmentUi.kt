@@ -8,15 +8,11 @@ import kotlin.concurrent.thread
  */
 class RecycleFragmentUi(val delegate: RestApiable) : RestApiable by delegate{
 
-
     fun PhotoZoGet(keyword:String,limit:Int){
-        Log.d("",keyword)
-        delegate.retrofitCall(keyword, limit, {
-                it?.let {
-                    it?.info.Photo.forEach {
-                        Log.d("photozo", it.photo_title)
-                    }
-                }
+        delegate.retrofitCall(keyword, limit, {callback ->
+            callback?.info?.photo?.let {photo->
+                photo.forEach { Log.d("title",it.photo_title) }
+            }
         })
 
     }

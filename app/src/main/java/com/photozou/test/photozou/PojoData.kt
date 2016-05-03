@@ -10,7 +10,7 @@ data class mainSerchPhotoZo(
 
 data class Info(
     val photo_num:Int,
-    val Photo:Array<Photo>
+    val photo:List<Photo>
 )
 
 data class Photo(

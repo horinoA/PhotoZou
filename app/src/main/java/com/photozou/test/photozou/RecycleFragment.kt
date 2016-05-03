@@ -30,8 +30,6 @@ class RecycleFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setRetainInstance(true)
-        val r : RestApi = RestApi()
-        fu = RecycleFragmentUi(r)
     }
 
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
@@ -48,6 +46,8 @@ class RecycleFragment : Fragment() {
             )
             val adapter = CustomAdapter(card_view_Array)
             my_recycler_view.adapter = adapter
+            val r : RestApi = RestApi()
+            fu = RecycleFragmentUi(r)
             fu.PhotoZoGet("花水木" ,5)
         }
     }
