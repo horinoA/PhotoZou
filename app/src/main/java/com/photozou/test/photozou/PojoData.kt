@@ -1,5 +1,7 @@
 package com.photozou.test.photozou
 
+import java.util.*
+
 /**
  * Created by horinoA on 2016/04/27.
  */
@@ -10,7 +12,7 @@ data class mainSerchPhotoZo(
 
 data class Info(
     val photo_num:Int,
-    val photo:List<Photo>
+    val photo: ArrayList<Photo>
 )
 
 data class Photo(

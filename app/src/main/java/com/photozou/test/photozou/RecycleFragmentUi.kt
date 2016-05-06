@@ -1,6 +1,7 @@
 package com.photozou.test.photozou
 
 import android.util.Log
+import kotlinx.android.synthetic.main.fragment_recycleview.*
 import kotlin.concurrent.thread
 
 /**
@@ -8,10 +9,11 @@ import kotlin.concurrent.thread
  */
 class RecycleFragmentUi(val delegate: RestApiable) : RestApiable by delegate{
 
-    fun PhotoZoGet(keyword:String,limit:Int){
+    fun PhotoZoGet(keyword:String,limit:Int,v:RecycleFragment){
         delegate.retrofitCall(keyword, limit, {callback ->
             callback?.info?.photo?.let {photo->
-                photo.forEach { Log.d("title",it.photo_title) }
+                val adapter = PhotoAdapter(photo,v.activity.applicationContext)
+                v.my_recycler_view.adapter = adapter
             }
         })
 
