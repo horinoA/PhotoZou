@@ -4,6 +4,7 @@ import android.app.Fragment
 import android.os.Bundle
 import android.support.v7.widget.DefaultItemAnimator
 import android.support.v7.widget.LinearLayoutManager
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -19,8 +20,11 @@ import kotlin.properties.Delegates
 
 class RecycleFragment : Fragment() {
 
-    val TAG = "RecyclerViewFragment"
-    lateinit var mfu : RecycleFragmentUi
+    val TAG = "RecyclerFragmentView"
+    val mPhotoTag = "mPhoto"
+    val mfunTag = "mfun"
+    var mfun : RecycleFragmentUi? = null
+    var mPhoto = ArrayList<Photo>()
 
 
     companion object {
@@ -36,14 +40,23 @@ class RecycleFragment : Fragment() {
 
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        mfun = RecycleFragmentUi(RestApi())
         my_recycler_view.apply {
             layoutManager = LinearLayoutManager(activity)
             itemAnimator = DefaultItemAnimator()
             setHasFixedSize(true)
         }
-        val r: RestApi = RestApi()
-        mfu = RecycleFragmentUi(r)
-        mfu.PhotoZoGet("花水木", 5, this)
+        if (savedInstanceState != null){
+            val gson = Gson()
+            val str = savedInstanceState.getString(mPhotoTag)
+            val type = object : TypeToken<ArrayList<Photo>>() {}.type
+            mPhoto = gson.fromJson(str,type)
+            Log.d("",mPhoto.toString())
+        }
+        if (mPhoto != null){
+            val adapter = PhotoAdapter(mPhoto, activity.applicationContext)
+            my_recycler_view.adapter = adapter
+        }
 
     }
 
@@ -55,5 +68,10 @@ class RecycleFragment : Fragment() {
 
     override fun onSaveInstanceState(outState: Bundle?) {
         super.onSaveInstanceState(outState)
+        outState?.apply {
+            val gson = Gson()
+            val str = gson.toJson(mPhoto)
+            putString(mPhotoTag,str.toString())
+        }
     }
 }
