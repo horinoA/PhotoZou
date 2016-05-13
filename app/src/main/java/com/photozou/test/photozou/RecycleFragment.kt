@@ -22,10 +22,10 @@ class RecycleFragment : Fragment() {
 
     val TAG = "RecyclerFragmentView"
     val mPhotoTag = "mPhoto"
-    val mfunTag = "mfun"
     var mfun : RecycleFragmentUi? = null
     var mPhoto = ArrayList<Photo>()
 
+    fun RecycleFragment(){}
 
     companion object {
         fun getInstance() : RecycleFragment {
@@ -38,19 +38,22 @@ class RecycleFragment : Fragment() {
         setRetainInstance(true)
     }
 
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+        mfun = RecycleFragmentUi(RestApi())
+    }
+
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        mfun = RecycleFragmentUi(RestApi())
         my_recycler_view.apply {
             layoutManager = LinearLayoutManager(activity)
             itemAnimator = DefaultItemAnimator()
             setHasFixedSize(true)
         }
         if (savedInstanceState != null){
-            val gson = Gson()
             val str = savedInstanceState.getString(mPhotoTag)
             val type = object : TypeToken<ArrayList<Photo>>() {}.type
-            mPhoto = gson.fromJson(str,type)
+            mPhoto.apply{Gson().fromJson(str,type)}
             Log.d("",mPhoto.toString())
         }
         if (mPhoto != null){
@@ -69,8 +72,7 @@ class RecycleFragment : Fragment() {
     override fun onSaveInstanceState(outState: Bundle?) {
         super.onSaveInstanceState(outState)
         outState?.apply {
-            val gson = Gson()
-            val str = gson.toJson(mPhoto)
+            val str = Gson().toJson(mPhoto)
             putString(mPhotoTag,str.toString())
         }
     }

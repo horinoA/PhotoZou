@@ -10,7 +10,10 @@ import kotlin.concurrent.thread
 class RecycleFragmentUi(val delegate: RestApiable) : RestApiable by delegate {
 
     fun PhotoZoGet(keyword: String, limit: Int, v: RecycleFragment) {
+        val lody = SpinningProgressDialog.newInstance("test","テスト")
+        lody.show(v.activity.fragmentManager,"lody")
         delegate.retrofitCall(keyword, limit, { callback ->
+            lody.dismiss()
             callback?.info?.photo?.let { photo ->
                 v.mPhoto = photo
                 val adapter = PhotoAdapter(photo, v.activity.applicationContext)

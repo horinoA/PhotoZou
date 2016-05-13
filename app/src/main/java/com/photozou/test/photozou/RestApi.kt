@@ -19,7 +19,6 @@ class RestApi : RestApiable{
         val call = service.getPotoZo(keyword,limit)
         call.enqueue(object : Callback<mainSerchPhotoZo>{
             override fun onResponse(response: Response<mainSerchPhotoZo>?, retrofit: Retrofit?) {
-                Log.d("test01",response?.body()?.stat.toString())
                 if (response?.body()?.stat == "ok"){
                     callback(response?.body())
                 }else{
