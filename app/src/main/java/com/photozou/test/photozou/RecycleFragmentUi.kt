@@ -15,6 +15,10 @@ class RecycleFragmentUi(val delegate: RestApiable) : RestApiable by delegate {
         delegate.retrofitCall(keyword, limit, { callback ->
             lody.dismiss()
             callback?.info?.photo?.let { photo ->
+                //Testtest
+                val test = TestFragmentUI()
+                test.test(keyword,limit,v)
+
                 v.mPhoto = photo
                 val adapter = PhotoAdapter(photo, v.activity.applicationContext)
                 v.my_recycler_view.adapter = adapter
